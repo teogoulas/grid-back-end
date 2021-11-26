@@ -1,0 +1,32 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  mariadb:
+    image: mariadb:10.2
+    container_name: mysqlserver
+    environment:
+      MYSQL_ROOT_PASSWORD: user
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    logging:
+      driver: syslog
+      options:
+        tag: "{{.DaemonName}}(image={{.ImageName}};name={{.Name}};id={{.ID}})"
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+
+  ldap:
+    image: osixia/openldap:1.1.10
+    ports:
+      - "388:388"
+    container_name: ldap
+    volumes:
+      - "./ldap:/ldap"
+    environment:
+      - LDAP_ORGANISATION=test
+      - LDAP_DOMAIN=test.gr
+      - LDAP_ADMIN_PASSWORD=user
+    restart: unless-stopped

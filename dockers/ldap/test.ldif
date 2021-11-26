@@ -1,0 +1,17 @@
+version: 1
+
+dn: ou=users,dc=test,dc=gr
+objectClass: top
+objectClass: organizationalUnit
+ou: users
+
+dn: cn=t.goulas@paymentcomponents.com,ou=users,dc=datamation,dc=gr
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: top
+cn: t.goulas@paymentcomponents.com
+sn: Goulas
+givenName: Thodoris
+mail: t.goulas@paymentcomponents.com
+userPassword:: e1NIQX02Y05GVCtZa3p0Uk1RdFBYMXVQamFKaTZTTkE9
