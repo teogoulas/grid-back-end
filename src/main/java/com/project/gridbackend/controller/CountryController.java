@@ -1,8 +1,9 @@
 package com.project.gridbackend.controller;
 
-import com.project.gridbackend.model.Car;
-import com.project.gridbackend.model.CarRequest;
-import com.project.gridbackend.service.CarService;
+import com.project.gridbackend.model.Country;
+import com.project.gridbackend.model.CountryRequest;
+import com.project.gridbackend.model.ListResponse;
+import com.project.gridbackend.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,21 +13,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
-public class CarController {
+public class CountryController {
 
 	@Autowired
-	CarService carService;
+	CountryService countryService;
 
 	@GetMapping("/list")
-	public ResponseEntity<List<Car>> getAllTutorials(CarRequest request) {
-		List<Car> list = carService.getCarList(request);
+	public ResponseEntity<ListResponse<Country>> getCountriesList(CountryRequest request) {
+		ListResponse<Country> results = countryService.getCountriesList(request);
 
-		return new ResponseEntity<List<Car>>(list, new HttpHeaders(), HttpStatus.OK);
+		return new ResponseEntity<>(results, new HttpHeaders(), HttpStatus.OK);
 	}
 
 }

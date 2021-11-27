@@ -43,4 +43,14 @@ public class ListRequest {
 	public void setAsc(boolean asc) {
 		this.asc = asc;
 	}
+
+	@Override
+	public String toString() {
+		return "ListRequest{" +
+				"page=" + page +
+				", rowsPerPage=" + rowsPerPage +
+				", by='" + by + '\'' +
+				", asc=" + asc +
+				'}';
+	}
 }
