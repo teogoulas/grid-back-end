@@ -1,9 +1,6 @@
 package com.project.gridbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "languages", schema = "nations")
@@ -15,17 +12,12 @@ public class Language {
 	@Column(name = "language", columnDefinition = "nvarchar50")
 	private String language;
 
-	@ManyToMany(mappedBy = "languages")
-	@JsonIgnore
-	Set<Country> countries;
-
 	public Language() {
 	}
 
-	public Language(Integer languageId, String language, Set<Country> countries) {
+	public Language(Integer languageId, String language) {
 		this.languageId = languageId;
 		this.language = language;
-		this.countries = countries;
 	}
 
 	public Integer getLanguageId() {
@@ -44,20 +36,11 @@ public class Language {
 		this.language = language;
 	}
 
-	public Set<Country> getCountries() {
-		return countries;
-	}
-
-	public void setCountries(Set<Country> countries) {
-		this.countries = countries;
-	}
-
 	@Override
 	public String toString() {
 		return "Language{" +
 				"languageId=" + languageId +
 				", language='" + language + '\'' +
-				", countries=" + countries +
 				'}';
 	}
 }

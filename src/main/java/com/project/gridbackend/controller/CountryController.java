@@ -2,6 +2,7 @@ package com.project.gridbackend.controller;
 
 import com.project.gridbackend.model.Country;
 import com.project.gridbackend.model.CountryRequest;
+import com.project.gridbackend.model.CountryResponse;
 import com.project.gridbackend.model.ListResponse;
 import com.project.gridbackend.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,13 @@ public class CountryController {
 	}
 
 	@GetMapping("/find/by/id")
-	public ResponseEntity<Country> getCountryById(CountryRequest request) {
+	public ResponseEntity<CountryResponse> getCountryById(CountryRequest request) {
 		return new ResponseEntity<>(countryService.getCountryById(request), new HttpHeaders(), HttpStatus.OK);
+	}
+
+	@GetMapping("/gdp")
+	public ResponseEntity<ListResponse<CountryResponse>> getCountriesGDPList(CountryRequest request) {
+		return new ResponseEntity<>(countryService.getCountriesGDPList(request), new HttpHeaders(), HttpStatus.OK);
 	}
 
 }

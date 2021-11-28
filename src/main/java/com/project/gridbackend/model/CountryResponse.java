@@ -1,39 +1,42 @@
 package com.project.gridbackend.model;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Collections;
+import java.util.List;
 
-@Entity
-@Table(name = "countries", schema = "nations")
-public class Country {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+public class CountryResponse implements Serializable {
 	private Integer countryId;
 
-	@Column(name = "name")
 	private String name;
 
-	@Column(name = "area", precision=10, scale=2)
 	private BigDecimal area;
 
-	@Column(name = "national_day")
 	private Date nationalDay;
 
-	@Column(name = "country_code2", columnDefinition = "char2")
 	private String countryCode2;
 
-	@Column(name = "country_code3", columnDefinition = "char3")
 	private String countryCode3;
 
-	@Column(name = "region_id")
 	private Integer regionId;
 
-	public Country() {
+	List<Language> languages;
+
+	List<CountryStats> countryStats;
+
+	public CountryResponse() {
 	}
 
-	public Country(Integer countryId, String name, BigDecimal area, Date nationalDay, String countryCode2,
-	               String countryCode3, Integer regionId) {
+	public CountryResponse(GdpResponse gdpResponse) {
+		this.countryId = gdpResponse.getCountryId();
+		this.name = gdpResponse.getName();
+		this.countryCode3 = gdpResponse.getCountryCode3();
+		this.countryStats = Collections.singletonList(new CountryStats(gdpResponse.getCountryId(), gdpResponse.getYear(), gdpResponse.getPopulation(), gdpResponse.getGdp()));
+	}
+
+	public CountryResponse(Integer countryId, String name, BigDecimal area, Date nationalDay, String countryCode2,
+	               String countryCode3, Integer regionId, List<Language> languages, List<CountryStats> countryStats) {
 		this.countryId = countryId;
 		this.name = name;
 		this.area = area;
@@ -41,6 +44,18 @@ public class Country {
 		this.countryCode2 = countryCode2;
 		this.countryCode3 = countryCode3;
 		this.regionId = regionId;
+		this.languages = languages;
+		this.countryStats = countryStats;
+	}
+
+	public CountryResponse(Country country) {
+		this.countryId = country.getCountryId();
+		this.name = country.getName();
+		this.area = country.getArea();
+		this.nationalDay = country.getNationalDay();
+		this.countryCode2 = country.getCountryCode2();
+		this.countryCode3 = country.getCountryCode3();
+		this.regionId = country.getRegionId();
 	}
 
 	public Integer getCountryId() {
@@ -97,6 +112,22 @@ public class Country {
 
 	public void setRegionId(Integer regionId) {
 		this.regionId = regionId;
+	}
+
+	public List<Language> getLanguages() {
+		return languages;
+	}
+
+	public void setLanguages(List<Language> languages) {
+		this.languages = languages;
+	}
+
+	public List<CountryStats> getCountryStats() {
+		return countryStats;
+	}
+
+	public void setCountryStats(List<CountryStats> countryStats) {
+		this.countryStats = countryStats;
 	}
 
 	@Override

@@ -1,9 +1,8 @@
 package com.project.gridbackend.service;
 
-import com.project.gridbackend.model.Country;
-import com.project.gridbackend.model.CountryRequest;
-import com.project.gridbackend.model.ListResponse;
+import com.project.gridbackend.model.*;
 import com.project.gridbackend.repository.CountryRepository;
+import com.project.gridbackend.repository.LanguageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,12 +11,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CountryService {
 
 	@Autowired
 	CountryRepository countryRepository;
+
+	@Autowired
+	LanguageRepository languageRepository;
 
 	public ListResponse<Country> getCountriesList(CountryRequest request) {
 		Pageable paging;
@@ -34,7 +38,20 @@ public class CountryService {
 				pagedResult.hasContent() ? pagedResult.getContent() : new ArrayList<>());
 	}
 
-	public Country getCountryById(CountryRequest request) {
-		return countryRepository.findById(request.getCountryId()).orElse(new Country());
+	public CountryResponse getCountryById(CountryRequest request) {
+		Country country = countryRepository.findById(request.getCountryId()).orElse(new Country());
+		CountryResponse response = new CountryResponse(country);
+
+		List<Language> languages = languageRepository.findAllByCountryId(request.getCountryId(), Sort.by("languageId"));
+		response.setLanguages(languages);
+		return response;
+	}
+
+	public ListResponse<CountryResponse> getCountriesGDPList(CountryRequest request) {
+		List<CountryResponse> result = countryRepository.findAllGDP().stream().
+				map(CountryResponse::new).collect(Collectors.toList());
+
+		return new ListResponse<>(request.getPage(), request.getRowsPerPage(), result.size(),
+				result.size() / request.getRowsPerPage(), request.getBy(), request.isAsc(), result);
 	}
 }
