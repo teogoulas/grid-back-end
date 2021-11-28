@@ -33,4 +33,8 @@ public class CountryService {
 				pagedResult.getNumberOfElements(), pagedResult.getTotalPages(), request.getBy(), request.isAsc(),
 				pagedResult.hasContent() ? pagedResult.getContent() : new ArrayList<>());
 	}
+
+	public Country getCountryById(CountryRequest request) {
+		return countryRepository.findById(request.getCountryId()).orElse(new Country());
+	}
 }

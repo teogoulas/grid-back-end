@@ -3,6 +3,7 @@ package com.project.gridbackend.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "countries", schema = "nations")
@@ -29,10 +30,18 @@ public class Country {
 	@Column(name = "region_id")
 	private Integer regionId;
 
+	@ManyToMany
+	@JoinTable(
+			name = "country_languages",
+			joinColumns = @JoinColumn(name = "country_id"),
+			inverseJoinColumns = @JoinColumn(name = "language_id"))
+	Set<Language> languages;
+
 	public Country() {
 	}
 
-	public Country(Integer countryId, String name, BigDecimal area, Date nationalDay, String countryCode2, String countryCode3, Integer regionId) {
+	public Country(Integer countryId, String name, BigDecimal area, Date nationalDay, String countryCode2,
+	               String countryCode3, Integer regionId, Set<Language> languages) {
 		this.countryId = countryId;
 		this.name = name;
 		this.area = area;
@@ -40,6 +49,7 @@ public class Country {
 		this.countryCode2 = countryCode2;
 		this.countryCode3 = countryCode3;
 		this.regionId = regionId;
+		this.languages = languages;
 	}
 
 	public Integer getCountryId() {
@@ -98,6 +108,14 @@ public class Country {
 		this.regionId = regionId;
 	}
 
+	public Set<Language> getLanguages() {
+		return languages;
+	}
+
+	public void setLanguages(Set<Language> languages) {
+		this.languages = languages;
+	}
+
 	@Override
 	public String toString() {
 		return "Country{" +
@@ -108,6 +126,7 @@ public class Country {
 				", countryCode2='" + countryCode2 + '\'' +
 				", countryCode3='" + countryCode3 + '\'' +
 				", regionId=" + regionId +
+				", languages=" + languages +
 				'}';
 	}
 }

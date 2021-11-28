@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/country")
 public class CountryController {
 
 	@Autowired
@@ -23,9 +23,12 @@ public class CountryController {
 
 	@GetMapping("/list")
 	public ResponseEntity<ListResponse<Country>> getCountriesList(CountryRequest request) {
-		ListResponse<Country> results = countryService.getCountriesList(request);
+		return new ResponseEntity<>(countryService.getCountriesList(request), new HttpHeaders(), HttpStatus.OK);
+	}
 
-		return new ResponseEntity<>(results, new HttpHeaders(), HttpStatus.OK);
+	@GetMapping("/find/by/id")
+	public ResponseEntity<Country> getCountryById(CountryRequest request) {
+		return new ResponseEntity<>(countryService.getCountryById(request), new HttpHeaders(), HttpStatus.OK);
 	}
 
 }
