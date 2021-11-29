@@ -17,16 +17,3 @@ services:
     restart: unless-stopped
     ports:
       - "3306:3306"
-
-  ldap:
-    image: osixia/openldap:1.1.10
-    ports:
-      - "388:388"
-    container_name: ldap
-    volumes:
-      - "./ldap:/ldap"
-    environment:
-      - LDAP_ORGANISATION=test
-      - LDAP_DOMAIN=test.gr
-      - LDAP_ADMIN_PASSWORD=user
-    restart: unless-stopped

@@ -11,7 +11,7 @@
     <groupId>com.project</groupId>
     <artifactId>grid-back-end</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>grid-back-end</name>
     <description>grid-back-end</description>
     <properties>

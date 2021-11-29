@@ -54,4 +54,12 @@ public class CountryService {
 		return new ListResponse<>(request.getPage(), request.getRowsPerPage(), result.size(),
 				result.size() / request.getRowsPerPage(), request.getBy(), request.isAsc(), result);
 	}
+
+	public ListResponse<CountryResponse> getCountriesDetailsList(CountryRequest request) {
+		List<CountryResponse> result = countryRepository.findAllDetails(request.getYearFrom(), request.getYearTo(), request.getRegionName()).stream().
+				map(CountryResponse::new).collect(Collectors.toList());
+
+		return new ListResponse<>(request.getPage(), request.getRowsPerPage(), result.size(),
+				result.size() / request.getRowsPerPage(), request.getBy(), request.isAsc(), result);
+	}
 }

@@ -4,19 +4,22 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 public class CountryRequest extends ListRequest {
-	Integer countryId;
+	private Integer countryId;
 	private String name;
 	private BigDecimal area;
 	private Date nationalDay;
 	private String countryCode2;
 	private String countryCode3;
 	private Integer regionId;
+	private String regionName;
+	private Integer yearFrom;
+	private Integer yearTo;
 
 	public CountryRequest() {
 	}
 
 	public CountryRequest(Integer countryId, String name, BigDecimal area, Date nationalDay, String countryCode2,
-	                      String countryCode3, Integer regionId) {
+	                      String countryCode3, Integer regionId, String regionName, Integer yearFrom, Integer yearTo) {
 		this.countryId = countryId;
 		this.name = name;
 		this.area = area;
@@ -24,6 +27,9 @@ public class CountryRequest extends ListRequest {
 		this.countryCode2 = countryCode2;
 		this.countryCode3 = countryCode3;
 		this.regionId = regionId;
+		this.regionName = regionName;
+		this.yearFrom = yearFrom;
+		this.yearTo = yearTo;
 	}
 
 	public int getCountryId() {
@@ -86,6 +92,30 @@ public class CountryRequest extends ListRequest {
 		this.regionId = regionId;
 	}
 
+	public String getRegionName() {
+		return regionName;
+	}
+
+	public void setRegionName(String regionName) {
+		this.regionName = regionName;
+	}
+
+	public Integer getYearFrom() {
+		return yearFrom;
+	}
+
+	public void setYearFrom(Integer yearFrom) {
+		this.yearFrom = yearFrom;
+	}
+
+	public Integer getYearTo() {
+		return yearTo;
+	}
+
+	public void setYearTo(Integer yearTo) {
+		this.yearTo = yearTo;
+	}
+
 	@Override
 	public String toString() {
 		return "CountryRequest{" +
@@ -96,6 +126,9 @@ public class CountryRequest extends ListRequest {
 				", countryCode2='" + countryCode2 + '\'' +
 				", countryCode3='" + countryCode3 + '\'' +
 				", regionId=" + regionId +
+				", regionName='" + regionName + '\'' +
+				", yearFrom=" + yearFrom +
+				", yearTo=" + yearTo +
 				'}';
 	}
 }

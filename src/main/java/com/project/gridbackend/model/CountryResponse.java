@@ -25,18 +25,16 @@ public class CountryResponse implements Serializable {
 
 	List<CountryStats> countryStats;
 
+	private String continentName;
+
+	private String regionName;
+
 	public CountryResponse() {
 	}
 
-	public CountryResponse(GdpResponse gdpResponse) {
-		this.countryId = gdpResponse.getCountryId();
-		this.name = gdpResponse.getName();
-		this.countryCode3 = gdpResponse.getCountryCode3();
-		this.countryStats = Collections.singletonList(new CountryStats(gdpResponse.getCountryId(), gdpResponse.getYear(), gdpResponse.getPopulation(), gdpResponse.getGdp()));
-	}
-
 	public CountryResponse(Integer countryId, String name, BigDecimal area, Date nationalDay, String countryCode2,
-	               String countryCode3, Integer regionId, List<Language> languages, List<CountryStats> countryStats) {
+	               String countryCode3, Integer regionId, List<Language> languages, List<CountryStats> countryStats,
+                   String continentName, String regionName) {
 		this.countryId = countryId;
 		this.name = name;
 		this.area = area;
@@ -46,6 +44,8 @@ public class CountryResponse implements Serializable {
 		this.regionId = regionId;
 		this.languages = languages;
 		this.countryStats = countryStats;
+		this.continentName = continentName;
+		this.regionName = regionName;
 	}
 
 	public CountryResponse(Country country) {
@@ -56,6 +56,21 @@ public class CountryResponse implements Serializable {
 		this.countryCode2 = country.getCountryCode2();
 		this.countryCode3 = country.getCountryCode3();
 		this.regionId = country.getRegionId();
+	}
+
+	public CountryResponse(GdpResponse gdpResponse) {
+		this.countryId = gdpResponse.getCountryId();
+		this.name = gdpResponse.getName();
+		this.countryCode3 = gdpResponse.getCountryCode3();
+		this.countryStats = Collections.singletonList(new CountryStats(gdpResponse.getCountryId(), gdpResponse.getYear(), gdpResponse.getPopulation(), gdpResponse.getGdp()));
+	}
+
+	public CountryResponse(CountryDetailsResponse countryDetailsResponse) {
+		this.countryId = countryDetailsResponse.getCountryId();
+		this.name = countryDetailsResponse.getCountryName();
+		this.continentName = countryDetailsResponse.getContinentName();
+		this.regionName = countryDetailsResponse.getRegionName();
+		this.countryStats = Collections.singletonList(new CountryStats(countryDetailsResponse.getCountryId(), countryDetailsResponse.getYear(), countryDetailsResponse.getPopulation(), countryDetailsResponse.getGdp()));
 	}
 
 	public Integer getCountryId() {
@@ -130,9 +145,25 @@ public class CountryResponse implements Serializable {
 		this.countryStats = countryStats;
 	}
 
+	public String getContinentName() {
+		return continentName;
+	}
+
+	public void setContinentName(String continentName) {
+		this.continentName = continentName;
+	}
+
+	public String getRegionName() {
+		return regionName;
+	}
+
+	public void setRegionName(String regionName) {
+		this.regionName = regionName;
+	}
+
 	@Override
 	public String toString() {
-		return "Country{" +
+		return "CountryResponse{" +
 				"countryId=" + countryId +
 				", name='" + name + '\'' +
 				", area=" + area +
@@ -140,6 +171,10 @@ public class CountryResponse implements Serializable {
 				", countryCode2='" + countryCode2 + '\'' +
 				", countryCode3='" + countryCode3 + '\'' +
 				", regionId=" + regionId +
+				", languages=" + languages +
+				", countryStats=" + countryStats +
+				", continentName='" + continentName + '\'' +
+				", regionName='" + regionName + '\'' +
 				'}';
 	}
 }
